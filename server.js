@@ -25,12 +25,17 @@ app.get("/random_episode", (req,res)=> {
 	})
 	.then(resp => resp.json())
 	.then(data => res.json(data))
-	.catch(console.error);
-})
+	.catch(err => console.error(err));
+});
 
 //! /listen
 app.post("/episodes", (req, res) => {
-	fetch(req.body.url, {
+	// search param + offset sent from clientside (body of request)
+	const urlOffset = req.body.urlOffset;
+	const urlSearch = req.body.urlSearch;
+  const url =  `https://listen-api.listennotes.com/api/v2/search?q=${urlSearch}&offset=${urlOffset ? urlOffset : 0}&scope=episode&language=Any language&len_min=0`
+	
+	fetch(url, {
 		headers: {
 			"Content-Type":"application/json",
 			"X-ListenAPI-Key": `${process.env.API_KEY}`
@@ -38,8 +43,9 @@ app.post("/episodes", (req, res) => {
 	})
 	.then(resp => resp.json())
 	.then(data => res.json(data))
-	.catch(err=> console.log);
-})
+	.catch(err => console.error(err));
+});
+
 const PORT = process.env.SERVER_PORT || 3001;
 app.listen(PORT, () => {
 	console.log(`App running on ${PORT}...`);
