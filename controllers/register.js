@@ -1,9 +1,10 @@
 const { uuid } = require("uuidv4");
 
 const handleRegister = (req,res,db, hash='temp') => {
-  const { username, password, email } = req.body
-  if (!username && !password && !email) {
-    res.status(400).send()
+  const { email, username, password } = req.body
+  console.log('body =',req.body)
+  if (!email || !username || !password) {
+    res.status(400).send('Please fill in your details!')
   } else {
     const newUser = {
       id: uuid(), // provide unique id to identify user
@@ -14,8 +15,7 @@ const handleRegister = (req,res,db, hash='temp') => {
       joined: new Date()
     }
     db.push(newUser)
-    console.log('new user', db[db.length - 1])
-    console.log('all', db);
+    console.log('NEW USER', db[db.length - 1])
     res.json(db[db.length - 1])
   }
 }
