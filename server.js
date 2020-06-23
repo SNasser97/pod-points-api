@@ -1,49 +1,19 @@
 require('dotenv').config();
+const fetch = require("node-fetch"); // fetch is not part of Node
 const express = require("express");
-const fetch = require("node-fetch");
 const cors = require("cors");
-const app = express();
+// CONTROLLERS
+const signIn = require("./controllers/signIn");
+const register = require("./controllers/register");
+const episodes = require("./controllers/episodes");
+const randomEpisodes = require("./controllers/randomEpisodes");
 
+const app = express();
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({extended:true}));
 app.get("/", (req, res) => {
 	res.send("working!");
-});
-
-//! /just_listen route (random episode)
-app.get("/random_episode", (req,res)=> {
-	let url = (
-		"https://listen-api.listennotes.com/api/v2/just_listen"
-		);
-	
-	fetch(url, {
-		headers: {
-			"Content-Type": "application/json",
-			"X-ListenAPI-Key": `${process.env.API_KEY}`
-		}
-	})
-	.then(resp => resp.json())
-	.then(data => res.json(data))
-	.catch(err => console.error(err));
-});
-
-//! /listen
-app.post("/episodes", (req, res) => {
-	// search param + offset sent from clientside (body of request)
-	const urlOffset = req.body.urlOffset;
-	const urlSearch = req.body.urlSearch;
-  const url =  `https://listen-api.listennotes.com/api/v2/search?q=${urlSearch}&offset=${urlOffset ? urlOffset : 0}&scope=episode&language=Any language&len_min=0`
-	
-	fetch(url, {
-		headers: {
-			"Content-Type":"application/json",
-			"X-ListenAPI-Key": `${process.env.API_KEY}`
-		}
-	})
-	.then(resp => resp.json())
-	.then(data => res.json(data))
-	.catch(err => console.error(err));
 });
 
 // dummy data
@@ -65,24 +35,22 @@ const test_db = [
 		joined: new Date()
 	}
 ]
-
+// requests
 app.post('/sign_in', (req, res) => {
+	signIn.handleSignIn(req,res, test_db);
+});
 
-	// console.log('req', req)
-	const username = req.body.username
-	const password = req.body.password
-	console.log('BODY', req.body)
-	// console.log(req.query)
-	// console.log('test')
-	console.log('QUERY', req.query)
-	if (test_db[1].username === username && test_db[1].password === password) {
-		console.log('SUCCESS =>', {username, password})
-		res.json(test_db[1])
-	} else {
-		console.log('FAILED =>', {username, password})
-		res.status(400).send()
-	}
-})
+app.post('/register', (req, res) => {
+	register.handleRegister(req,res,test_db);
+});
+
+app.get("/random_episode", (req, res) => {
+	randomEpisodes.getRandomEpisodesAPI(req, res, fetch)
+});
+
+app.post("/episodes", (req, res) => {
+	episodes.getEpisodesAPI(req, res, fetch)
+});
 
 const PORT = process.env.SERVER_PORT || 3001;
 app.listen(PORT, () => {
