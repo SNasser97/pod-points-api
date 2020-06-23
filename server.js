@@ -2,6 +2,7 @@ require('dotenv').config();
 const fetch = require("node-fetch"); // fetch is not part of Node
 const express = require("express");
 const cors = require("cors");
+
 // CONTROLLERS
 const signIn = require("./controllers/signIn");
 const register = require("./controllers/register");

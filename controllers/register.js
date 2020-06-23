@@ -1,10 +1,12 @@
+const { uuid } = require("uuidv4");
+
 const handleRegister = (req,res,db, hash='temp') => {
   const { username, password, email } = req.body
   if (!username && !password && !email) {
     res.status(400).send()
   } else {
     const newUser = {
-      id: Math.floor(Math.random() * 99999),
+      id: uuid(), // provide unique id to identify user
       username,
       password,
       email,
