@@ -2,7 +2,6 @@ const handleSignIn = (req, res, db, hash='temp') => {
   const username = req.body.username
   const password = req.body.password
   
-  console.log('db of users', db); //! for debugging - remove
   console.log('BODY=>', req.body)
   
   const index = db.users.findIndex(acc => {
