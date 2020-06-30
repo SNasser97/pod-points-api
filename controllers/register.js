@@ -14,9 +14,9 @@ const handleRegister = (req,res,db, hash='temp') => {
       score: 0,
       joined: new Date()
     }
-    db.push(newUser)
-    console.log('NEW USER', db[db.length - 1])
-    res.json(db[db.length - 1])
+    db.users.push(newUser)
+    console.log('NEW USER', db.users[db.users.length - 1])
+    res.json(db.users[db.users.length - 1])
   }
 }
 
