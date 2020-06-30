@@ -1,30 +1,81 @@
+require('dotenv').config();
+const fetch = require("node-fetch"); // fetch is not part of Node
 const express = require("express");
 const cors = require("cors");
-const app = express();
 
+// CONTROLLERS
+const signIn = require("./controllers/signIn");
+const register = require("./controllers/register");
+const episodes = require("./controllers/episodes");
+const randomEpisodes = require("./controllers/randomEpisodes");
+const profile = require("./controllers/profile");
+const score = require("./controllers/score");
+
+const { uuid } = require('uuidv4');
+
+const app = express();
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({extended:false}));
 app.get("/", (req, res) => {
-	res.send("working!");
-})
+	res.sendFile(__dirname+"/index.html");
+});
+
+// dummy data
+const test_db = {
+	users: [
+		{
+			id: "1",
+			username: 'DoesPods12',
+			password: 'pods321',
+			email: 'jdoe@example.com',
+			score: 200,
+			joined: new Date()
+		},
+		{
+			id: "2",
+			username: 'MaggieA',
+			password: 'cookies1',
+			email: 'maggie@gmail.com',
+			score: 1220,
+			joined: new Date()
+		}
+	]
+}
+//* main requests
+app.post('/sign_in', (req, res) => {
+	signIn.handleSignIn(req,res, test_db);
+});
+app.post('/register', (req, res) => {
+	register.handleRegister(req,res,test_db);
+});
+app.get("/profile/:id", (req, res) => {
+	profile.handleProfileGet(req,res, test_db);
+});
+app.put("/score", (req, res) => {
+	score.handleScoreUpdate(req, res, test_db);
+});
+
+//* vendor requests
+app.post("/episodes", (req, res) => {
+	episodes.getEpisodesAPI(req, res, fetch)
+});
+app.get("/random_episode", (req, res) => {
+	randomEpisodes.getRandomEpisodesAPI(req, res, fetch)
+});
 
 
-app.get("/testRoute", (req,res)=> {
-	// let key = "5bc09b556c3f4175b51bfef06a27543c";
-	// let url = "https://listen-api.listennotes.com/api/v2/search?q=star%20wars&sort_by_date=0&type=episode&offset=0&len_min=10&len_max=30&genre_ids=68%2C82&published_before=1580172454000&published_after=0&only_in=title%2Cdescription&language=English&safe_mode=0";
-	// // req.get("X-ListenAPI-Key", "5bc09b556c3f4175b51bfef06a27543c");
-	// // res.json();
-	// fetch(url, {
-	// 	method:"GET",
-	// 	"X-ListenAPI-Key":key
-	// }).then(resp => {
-	// 	// console.log(resp.data.status);
-	// 	// res.send(res.data.status);
-	// }).catch(err=>console.log(err));
-	// res.set("X-ListenAPI-Key", "5bc09b556c3f4175b51bfef06a27543c");
-	// res.send;
-})
 
-app.listen(3001);
-console.log("App is running on 3001...");
+const PORT = process.env.SERVER_PORT || 3002;
+app.listen(PORT, () => {
+	console.log(`App running on ${PORT}...`);
+});
+
+
+// // TODO: ROUTE - /episode_random - GET
+// // TODO: ROUTE - /episode
+// TODO: ROUTE - /signin - POST
+// TODO: ROUTE - /register - POST
+// TODO: ROUTE - /profile - GET
+// TODO: ROUTE - /leaderboard - GET
+// TODO: ROUTE - /score - PUT

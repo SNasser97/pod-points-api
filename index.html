@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+  <html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>local dev server : 3000 </title>
+    <style>
+      html {height: 100%;}
+      body {
+        font-family: consolas; background: rgb(29, 28, 41); 
+        color:#f4f4f4;
+        height: 100vh;
+      }
+      section {
+        background: rgb(33, 33, 58);
+        width: 80%;
+        padding: 10px;
+        margin:50px auto;
+      }
+      .important {
+        font-style: bold; 
+        color:darksalmon;
+        background: #000;
+        padding: 10px 2px;
+        border-radius: 25px;
+        text-align: center;
+      }
+      .container {
+        padding: 30px;
+        column-count: 2;
+        column-gap: 80px;
+      }
+      a {color:royalblue}
+      h1,
+      main { text-align: center;}
+      h1 {font-size: 40px;}
+    </style>
+  </head>
+  <body>
+    <h1> POD POINTS LOCAL SERVER </h1>
+
+    <main>
+      <p class="para">Welcome to the the restAPI of pod-points. <br>If you're able to read this - good news! The server is up and
+        running!</p>
+    </main>
+
+    <section id="about">
+      <div class="container">
+        <h2>About</h2>
+        <p>Pod points is a simple fullstack web project developed by me using the Listen Notes API (of course with the help of google and documentation!) built throughout being whilst in qurantine.</p>
+        <p>This is my own personal project which I decided to work on and if any suggestions or improvements, feel free to fork and build on top of it</p>
+        <p class="important">Do note you will need an API key from <a href="https://www.listennotes.com/api/">Listen Notes</a></p>
+        
+        <h4>Techstack:</h4>
+        <ul>
+          <li>React + Redux + Router</li>
+          <li>Node + Express</li>
+          <li>postgreSQL</li>
+          <li>SASS</li>
+        </ul>
+        <h4>Vendors</h4>
+        <ul>
+          <li>Listen Notes</li>
+          <li>React-media-player</li>
+          <li>react-reveal</li>
+        </ul>
+      </div>
+    </section>
+  </body>
+</html>
