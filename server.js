@@ -2,16 +2,20 @@ require('dotenv').config();
 const fetch = require("node-fetch"); // fetch is not part of Node
 const express = require("express");
 const cors = require("cors");
-
+const knex = require("knex");
+// const DATABASE = knex({
+// 	client:'psql',
+// })
 // CONTROLLERS
-const signIn = require("./controllers/signIn");
-const register = require("./controllers/register");
-const episodes = require("./controllers/episodes");
-const randomEpisodes = require("./controllers/randomEpisodes");
-const profile = require("./controllers/profile");
-const score = require("./controllers/score");
+const signIn = require(`${__dirname}/controllers/signIn`);
+const register = require(`${__dirname}/controllers/register`);
+const episodes = require(`${__dirname}/controllers/episodes`);
+const randomEpisodes = require(`${__dirname}/controllers/randomEpisodes`);
+const profile = require(`${__dirname}/controllers/profile`);
+const score = require(`${__dirname}/controllers/score`);
+const leaderboard = require(`${__dirname}/controllers/leaderboard`);
 
-const { uuid } = require('uuidv4');
+const { uuid } = require("uuidv4");
 
 const app = express();
 app.use(cors());
@@ -26,17 +30,17 @@ const test_db = {
 	users: [
 		{
 			id: "1",
-			username: 'DoesPods12',
-			password: 'pods321',
-			email: 'jdoe@example.com',
+			username: "DoesPods12",
+			password: "pods321",
+			email: "jdoe@example.com",
 			score: 200,
 			joined: new Date()
 		},
 		{
 			id: "2",
-			username: 'MaggieA',
-			password: 'cookies1',
-			email: 'maggie@gmail.com',
+			username: "MaggieA",
+			password: "cookies1",
+			email: "maggie@gmail.com",
 			score: 1220,
 			joined: new Date()
 		}
@@ -55,7 +59,9 @@ app.get("/profile/:id", (req, res) => {
 app.put("/score", (req, res) => {
 	score.handleScoreUpdate(req, res, test_db);
 });
-
+app.get("/leaderboard", (req, res) => {
+	leaderboard.handleGetLeaderboard(req,res,test_db);
+})
 //* vendor requests
 app.post("/episodes", (req, res) => {
 	episodes.getEpisodesAPI(req, res, fetch)
@@ -70,7 +76,7 @@ const PORT = process.env.SERVER_PORT || 3002;
 app.listen(PORT, () => {
 	console.log(`App running on ${PORT}...`);
 });
-
+console.log('s', test_db);
 
 // // TODO: ROUTE - /episode_random - GET
 // // TODO: ROUTE - /episode
