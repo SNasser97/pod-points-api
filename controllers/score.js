@@ -1,7 +1,7 @@
 
 const handleScoreUpdate = (req, res, db) => {
   const { id } = req.body;
-  const reward = 75;
+  const reward = Math.floor(Math.random() * 250) + 70;
   
   const index = db.users.findIndex(user => user.id === id);
 
