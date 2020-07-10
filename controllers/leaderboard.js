@@ -1,17 +1,12 @@
 const handleGetLeaderboard = (req, res, db) => {
 
-  const leaderboard = db.users.sort((a,b)=> b.score - a.score);
-  const usersInLeaderboard = [];
+  // Order list of users by their current scores
+  db.select(["username", "score"]).from("Users").orderBy("score", "desc")
+  .then(listOfUsers => {
+    return res.json(listOfUsers);
+  })
+  .catch(err => res.status(400).json(err.message))
 
-  for(let i = 0; i < leaderboard.length; i++) {
-    usersInLeaderboard[i] = {
-      id: leaderboard[i].id, 
-      username:leaderboard[i].username, 
-      score:leaderboard[i].score,
-      position: leaderboard.indexOf(leaderboard[i]) + 1, 
-    }
-  }
-  res.json(usersInLeaderboard);
 }
 
 module.exports = {
