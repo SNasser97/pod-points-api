@@ -1,16 +1,8 @@
+const tryCatch = require(`${__dirname}/asyncHandler`);
 
-const getRandomEpisodesAPI = (req,res,fetch) => {
-  let url = "https://listen-api.listennotes.com/api/v2/just_listen";
-
-  fetch(url, {
-    headers: {
-      "Content-Type": "application/json",
-      "X-ListenAPI-Key": `${process.env.API_KEY}`
-    }
-  })
-  .then(resp => resp.json())
-  .then(data => res.json(data))
-  .catch(err => console.error(err));
+const getRandomEpisodesAPI = async (req,res,fetch) => {
+  const url = "https://listen-api.listennotes.com/api/v2/just_listen";
+  tryCatch.asyncHandler(req,res,fetch,url);
 }
 
 module.exports = {
