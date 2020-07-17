@@ -18,7 +18,8 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({extended:false}));
 app.get("/", (req, res) => {
-	res.sendFile(__dirname+"/index.html");
+	res.send("online");
+	// res.sendFile(__dirname+"/index.html");
 });
 //! pgsql DATABASE CONNECTION
 const pg = knex({
