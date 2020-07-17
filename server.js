@@ -55,7 +55,7 @@ app.get("/random_episode", (req, res) => {
 	randomEpisodes.getRandomEpisodesAPI(req, res, fetch)
 });
 
-const PORT = process.env.SERVER_PORT || 3002;
+const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => {
 	console.log(`App running on ${PORT}...`);
 });
