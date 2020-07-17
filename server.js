@@ -18,8 +18,7 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({extended:false}));
 app.get("/", (req, res) => {
-	res.send("online");
-	// res.sendFile(__dirname+"/index.html");
+	res.sendFile(__dirname+"/index.html");
 });
 //! pgsql DATABASE CONNECTION
 const pg = knex({
@@ -56,7 +55,7 @@ app.get("/random_episode", (req, res) => {
 	randomEpisodes.getRandomEpisodesAPI(req, res, fetch)
 });
 
-const PORT = process.env.PORT || 3001;
+const PORT = process.env.SERVER_PORT || 3002;
 app.listen(PORT, () => {
 	console.log(`App running on ${PORT}...`);
 });
