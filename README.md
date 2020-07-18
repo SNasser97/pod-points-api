@@ -1,9 +1,13 @@
 # PodPoints API / Back-end
 
-### Setup
-<b>
+  `process.env.NODE_TLS_REJECT_UNAUTHORIZED = 0;` has been added to server.js file
+  <strong><br><br>This project uses the free version (hobby-dev) of heroku, do not use real credentials</strong>
 
-You will need an API key from [Listen Notes](https://www.listennotes.com/)</b>
+
+### Setup
+<strong>
+
+You will need an API key from [Listen Notes](https://www.listennotes.com/)</strong>
 
 1. `clone repo`
 2. `npm install`
