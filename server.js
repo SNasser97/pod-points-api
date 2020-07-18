@@ -23,12 +23,19 @@ app.get("/", (req, res) => {
 //! pgsql DATABASE CONNECTION
 const pg = knex({
 	client:"pg",
-	connection:{
-		host: "127.0.0.1",
-		user: "postgres",
-		password: "admin",
-		database: "pod-points",
+	connection {
+		host: process.env.DATABASE_URL,
+		ssl: true
 	}
+	/*
+		* FOR LOCAL / DEV SERVER
+		connection:{
+			host: "127.0.0.1",
+			user: "postgres",
+			password: "admin",
+			database: "pod-points",
+		}
+	*/
 });
 
 //* main requests
