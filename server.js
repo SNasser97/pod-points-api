@@ -23,7 +23,7 @@ app.get("/", (req, res) => {
 //! pgsql DATABASE CONNECTION
 const pg = knex({
 	client:"pg",
-	connection {
+	connection: {
 		connectionString: process.env.DATABASE_URL,
 		ssl: true
 	}
