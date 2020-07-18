@@ -21,6 +21,7 @@ app.get("/", (req, res) => {
 	res.sendFile(__dirname+"/index.html");
 });
 //! pgsql DATABASE CONNECTION
+process.env.NODE_TLS_REJECT_UNAUTHORIZED = 0; 
 const pg = knex({
 	client:"pg",
 	connection: {
