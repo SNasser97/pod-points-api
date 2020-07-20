@@ -27,16 +27,13 @@ const pg = knex({
 	connection: {
 		connectionString: process.env.DATABASE_URL,
 		ssl: true
+		////////////////////////////
+		// FOR LOCAL DEV SERVER
+		// host: "127.0.0.1",
+		// user: "postgres",
+		// password: "admin",
+		// database: "pod-points",
 	}
-	/*
-		//* FOR LOCAL / DEV SERVER
-		connection:{
-			host: "127.0.0.1",
-			user: "postgres",
-			password: "admin",
-			database: "pod-points",
-		}
-	*/
 });
 
 //* main requests
