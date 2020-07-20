@@ -21,7 +21,7 @@ app.get("/", (req, res) => {
 	res.sendFile(__dirname+"/index.html");
 });
 //! pgsql DATABASE CONNECTION
-process.env.NODE_TLS_REJECT_UNAUTHORIZED = 0; 
+// process.env.NODE_TLS_REJECT_UNAUTHORIZED = 0; 
 const pg = knex({
 	client:"pg",
 	connection: {
@@ -29,7 +29,7 @@ const pg = knex({
 		ssl: true
 	}
 	/*
-		* FOR LOCAL / DEV SERVER
+		//* FOR LOCAL / DEV SERVER
 		connection:{
 			host: "127.0.0.1",
 			user: "postgres",
