@@ -20,7 +20,7 @@ const handleRegister = (req, res, db, bcrypt) => {
   } else if (email !== "" && username !== "" && password !== "") {
     // make a transaction where we create a new user
     db.transaction(trx => {
-      trx.insert({
+      return trx.insert({
         id: uuid(),
         username,
         email,
@@ -51,7 +51,7 @@ const handleRegister = (req, res, db, bcrypt) => {
             .then(trx.commit)
             .catch(trx.rollback)  
       })
-      .catch(err => res.status(400).json({error:err.message}))
+      .catch(err => res.status(400).json({error:"Username or Email already in use"}))
     })
   } else {
     res.status(400).json({error:"Please fill all fields"});
