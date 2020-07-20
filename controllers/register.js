@@ -40,7 +40,7 @@ const handleRegister = (req, res, db, bcrypt) => {
             .then(user => {
               if(user.length) {
                 // if new user exists make query to User table and retrieve new row
-                db.select("*")
+                return db.select("*")
                   .from("Users")
                   .where("id", "=", user[0].id)
                   .then(newUser => res.json(newUser[0]))
