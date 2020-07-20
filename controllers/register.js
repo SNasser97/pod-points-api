@@ -51,7 +51,7 @@ const handleRegister = (req, res, db, bcrypt) => {
             .then(trx.commit)
             .catch(trx.rollback)  
       })
-      .catch(err => res.status(400).json({error:"Username or Email already in use"}))
+      .catch(err => res.status(400).json({error:err.message}))
     })
   } else {
     res.status(400).json({error:"Please fill all fields"});
