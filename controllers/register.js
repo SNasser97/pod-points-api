@@ -20,7 +20,7 @@ const handleRegister = (req, res, db, bcrypt) => {
   } else if (email !== "" && username !== "" && password !== "") {
     // make a transaction where we create a new user
     db.transaction(trx => {
-      return trx.insert({
+      trx.insert({
         id: uuid(),
         username,
         email,
